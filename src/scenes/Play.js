@@ -19,7 +19,6 @@ class Play extends Phaser.Scene {
             //may need to be moved to player class
             //fill code with jump
             console.log("jumping!"); 
-            console.log("hihi");
         }
 
     }
