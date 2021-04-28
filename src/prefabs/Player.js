@@ -8,11 +8,7 @@ class Player extends Phaser.GameObjects.Sprite {
         
     }
 
-    jump(){
-        if (Phaser.Input.Keyboard.JustDown(keySPACE)){
-            //may need to be moved to player class
-            //fill code with jump
-            console.log("jumping!"); 
-        }
-    }
+    // // jump(){
+
+    // }
 }
