@@ -12,11 +12,21 @@ class Menu extends Phaser.Scene {
     create(){
         this.MMBG = this.add.image(390, 220, 'MMBackground');
         //this.scene.start("playScene");
-        this.play = this.add.image(640, 85, 'PlayButton');
-        this.credits = this.add.image(640, 215, 'CharacterButton');
-        this.credits = this.add.image(640, 345, 'CreditsButton');
+        let play = this.add.image(640, 85, 'PlayButton');
+        let characters = this.add.image(640, 215, 'CharacterButton');
+        let credits = this.add.image(640, 345, 'CreditsButton');
+
+        // Set images to be interactive buttons.
+        play.setInteractive();
+        characters.setInteractive();
+        credits.setInteractive();
+
+        play.on('pointerdown', () => {
+            this.scene.start("playScene");
+        });
+
     }
     update() {
-
+        
     }
 }

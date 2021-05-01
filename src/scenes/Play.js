@@ -4,11 +4,15 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        
+        this.load.image('GPBackground01', '../../assets/GPBackground01.png');
     }
 
     create(){
+        // Define keys.
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+        // Define background.
+        this.GPBG = this.add.image(780, 220, 'GPBackground01');
 
         //player sprite
         // this.player = new Player (this,
