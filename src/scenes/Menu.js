@@ -3,10 +3,14 @@ class Menu extends Phaser.Scene {
         super("menuScene");
     }
     preload(){
-        // No audio to preload
+        this.load.image('MMBackground', '../../assets/MainMenuBackground.png');
     }
 
     create(){
-        this.scene.start("playScene");
+        this.add.image(390, 220, 'MMBackground');
+        //this.scene.start("playScene");
+    }
+    update() {
+
     }
 }
