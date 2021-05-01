@@ -3,7 +3,7 @@ class Menu extends Phaser.Scene {
         super("menuScene");
     }
     preload(){
-
+        // No audio to preload
     }
 
     create(){
