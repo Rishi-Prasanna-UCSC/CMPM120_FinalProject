@@ -12,7 +12,7 @@ class Play extends Phaser.Scene {
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         // Define background.
-        this.GPBG = this.add.image(780, 220, 'GPBackground01');
+        this.GPBG = this.add.tileSprite(0, 0, 780, 440, 'GPBackground01').setOrigin(0, 0);
 
         //player sprite
         // this.player = new Player (this,
@@ -22,6 +22,7 @@ class Play extends Phaser.Scene {
     }
 
     update(){
+        this.GPBG.tilePositionX += 1;
         // this.starfield.tilePositionX -= 4; //replace with actual background
 
         //jump
