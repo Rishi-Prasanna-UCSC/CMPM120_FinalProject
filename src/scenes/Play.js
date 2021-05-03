@@ -11,6 +11,9 @@ class Play extends Phaser.Scene {
         // Load player sprites.
         //this.load.image('AntRunning', 'assets/AntRunSequence.gif');
         this.load.image('AntFalling', 'assets/AntFalling.png');
+
+        // Load player spritesheet for running.
+        this.load.spritesheet('AntRunning', 'assets/AntRunningSpritesheet.png', {frameWidth: 150, frameHeight: 271});
     }
 
     create(){
@@ -23,6 +26,14 @@ class Play extends Phaser.Scene {
         this.pause = this.add.image(720, 50, 'Pause');
 
         // Put running ant on screen.
+        this.antRunning = this.anims.create({
+            key: 'AntRunning',
+            frames: this.anims.generateFrameNumbers('AntRunning', {
+                start: 0, end: 3
+            }),
+            frameRate: 7
+        });
+
         this.antP1 = new Ant(this, 100, 200, 'AntFalling');
 
         //player sprite
@@ -35,7 +46,7 @@ class Play extends Phaser.Scene {
     update(){
         this.GPBG.tilePositionX += 1;
         // this.starfield.tilePositionX -= 4; //replace with actual background
-        
+
         //jump
         // if (Phaser.Input.Keyboard.JustDown(keySPACE)){
         //     //may need to be moved to player class

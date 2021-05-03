@@ -6,7 +6,7 @@ class Ant extends Phaser.GameObjects.Sprite {
         // Used for animation.
         // If false, fall.
         // If true, run.
-        this.onGround = false;
+        this.onGround = true;
 
         // If false, use onGround's status.
         // If true, swim.
@@ -21,7 +21,7 @@ class Ant extends Phaser.GameObjects.Sprite {
         }
         else {
             // Falling.
-
+            
             this.y += 10;
         }
     }
