@@ -21,7 +21,19 @@ class Ant extends Phaser.GameObjects.Sprite {
         }
         else {
             // Falling.
-            this.y += 6;
+
+            this.y += 10;
+        }
+    }
+
+    isOffScreen(){
+        // Why 513?
+        // Because 513 is the screen height plus the height of the ant!
+        if (this.y > 626) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
 

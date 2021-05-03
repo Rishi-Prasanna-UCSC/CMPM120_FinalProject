@@ -43,5 +43,11 @@ class Play extends Phaser.Scene {
         //     console.log("jumping!"); 
         // }
         this.antP1.update();
+        if (this.antP1.isOffScreen()) {
+            this.GPBG.tilePositionX -= 1;
+            this.time.delayedCall(1500, () => {
+                this.scene.start("gameoverScene");
+            }, null, this);
+        }
     }
 }

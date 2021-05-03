@@ -2,14 +2,13 @@ let config = {
     type: Phaser.CANVAS,
     width: 780,
     height: 440,
-    scene: [Intro, Menu, Play]
+    scene: [Intro, Menu, Play, GameOver]
 }
 
 let game = new Phaser.Game(config);
 
 let borderUISize = game.config.height / 15;
 let borderPadding = borderUISize / 3;
-
-
-
 let keySPACE;
+
+let score = 0;
