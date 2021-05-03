@@ -10,7 +10,7 @@ class Play extends Phaser.Scene {
 
         // Load player sprites.
         //this.load.image('AntRunning', 'assets/AntRunSequence.gif');
-        this.load.image('AntFalling', 'assets/AntFalling.png');
+        //this.load.image('AntFalling', 'assets/AntFalling.png');
 
         // Load player spritesheet for running.
         this.load.spritesheet('AntRunning', 'assets/AntRunningSpritesheet.png', {frameWidth: 150, frameHeight: 271});
@@ -26,15 +26,27 @@ class Play extends Phaser.Scene {
         this.pause = this.add.image(720, 50, 'Pause');
 
         // Put running ant on screen.
-        this.antRunning = this.anims.create({
+        this.anims.create({
             key: 'AntRunning',
             frames: this.anims.generateFrameNumbers('AntRunning', {
-                start: 0, end: 3
+                start: 1, end: 4
+            }),
+            frameRate: 7,
+            repeat: -1
+
+        });
+        /*
+        this.anims.create({
+            key: 'AntFalling',
+            frames: this.anims.generateFrameNumbers('AntFalling', {
+                start: 0, end: 0
             }),
             frameRate: 7
-        });
+        });*/
 
-        this.antP1 = new Ant(this, 100, 200, 'AntFalling');
+        this.antP1 = new Ant(this, 100, 280, 'AntRunning');
+        this.antP1.setScale(2/3,2/3);
+        this.antP1.anims.play('AntRunning');
 
         //player sprite
         // this.player = new Player (this,
