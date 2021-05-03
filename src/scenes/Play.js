@@ -35,7 +35,7 @@ class Play extends Phaser.Scene {
     update(){
         this.GPBG.tilePositionX += 1;
         // this.starfield.tilePositionX -= 4; //replace with actual background
-
+        
         //jump
         // if (Phaser.Input.Keyboard.JustDown(keySPACE)){
         //     //may need to be moved to player class
