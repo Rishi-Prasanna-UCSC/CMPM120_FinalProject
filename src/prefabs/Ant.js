@@ -15,7 +15,14 @@ class Ant extends Phaser.GameObjects.Sprite {
     }
 
     update(){
-        
+        if (this.onGround) {
+            // Implement running.
+            ;
+        }
+        else {
+            // Falling.
+            this.y += 6;
+        }
     }
 
     // // jump(){
