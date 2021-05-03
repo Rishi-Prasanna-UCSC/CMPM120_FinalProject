@@ -4,8 +4,13 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
+        // Load background and play assets.
         this.load.image('GPBackground01', '../../assets/GPBackground01.png');
         this.load.image('Pause', '../../assets/PauseButton.png');
+
+        // Load player sprites.
+        this.load.image('AntRunning', 'assets/AntRunSequence.gif');
+        this.load.image('AntFalling', 'assets/AntFalling.gif');
     }
 
     create(){
@@ -16,6 +21,9 @@ class Play extends Phaser.Scene {
         this.GPBG = this.add.tileSprite(0, 0, 780, 440,
             'GPBackground01').setOrigin(0, 0);
         this.pause = this.add.image(720, 50, 'Pause');
+
+        // Put running ant on screen.
+        this.antP1 = new Ant(this, 0, 0, 'AntRunning').setOrigin(0.5,0);
 
         //player sprite
         // this.player = new Player (this,
