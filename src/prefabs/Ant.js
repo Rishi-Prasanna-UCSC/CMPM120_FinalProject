@@ -8,6 +8,11 @@ class Ant extends Phaser.GameObjects.Sprite {
         // If true, run.
         this.onGround = true;
 
+        // Used for jumping.
+        // If false, fall.
+        // If true, jump.
+        this.jump = false;
+
         // If false, use onGround's status.
         // If true, swim.
         // We won't use this for our current state of the Endless Runner.
@@ -15,13 +20,16 @@ class Ant extends Phaser.GameObjects.Sprite {
     }
 
     update(){
+        if (this.jump) {
+            this.y -= 10;
+        }
         if (this.onGround) {
             // Implement running.
             ;
         }
         else {
             // Falling.
-            
+
             this.y += 10;
         }
     }

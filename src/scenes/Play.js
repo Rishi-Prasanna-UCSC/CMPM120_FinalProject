@@ -25,32 +25,33 @@ class Play extends Phaser.Scene {
             'GPBackground01').setOrigin(0, 0);
         this.pause = this.add.image(720, 50, 'Pause');
 
-        // Put running ant on screen.
+        // Running Ant Animation.
         this.anims.create({
             key: 'AntRunning',
             frames: this.anims.generateFrameNumbers('AntRunning', {
                 start: 1, end: 4
             }),
-            frameRate: 7,
+            frameRate: 9,
             repeat: -1
 
         });
-        /*
+        // Jumping Ant Animation.
         this.anims.create({
             key: 'AntJumping',
-            frames: this.anims.generateFrameNumbers('AntJumping', {
+            frames: this.anims.generateFrameNumbers('AntRunning', {
                 start: 5, end: 6
             }),
-            frameRate: 7
+            frameRate: 10
         });
+        // Falling Ant Animation.
         this.anims.create({
             key: 'AntFalling',
-            frames: this.anims.generateFrameNumbers('AntFalling', {
+            frames: this.anims.generateFrameNumbers('AntRunning', {
                 start: 0, end: 0
             }),
-            frameRate: 7
+            frameRate: 9
         });
-        */
+        
 
         this.antP1 = new Ant(this, 100, 280, 'AntRunning');
         this.antP1.setScale(2/3,2/3);
@@ -74,6 +75,11 @@ class Play extends Phaser.Scene {
         //     console.log("jumping!"); 
         // }
         this.antP1.update();
+
+        if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+            this.antP1.jump = true;
+            this.antP1.anims.play('AntJumping');
+        }
         if (this.antP1.isOffScreen()) {
             this.GPBG.tilePositionX -= 1;
             this.time.delayedCall(1500, () => {
