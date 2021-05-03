@@ -13,7 +13,7 @@ class Play extends Phaser.Scene {
         //this.load.image('AntFalling', 'assets/AntFalling.png');
 
         // Load player spritesheet for running.
-        this.load.spritesheet('AntRunning', 'assets/AntRunningSpritesheet.png', {frameWidth: 150, frameHeight: 271});
+        this.load.spritesheet('AntRunning', 'assets/AntSpritesheet.png', {frameWidth: 150, frameHeight: 271});
     }
 
     create(){
@@ -37,12 +37,20 @@ class Play extends Phaser.Scene {
         });
         /*
         this.anims.create({
+            key: 'AntJumping',
+            frames: this.anims.generateFrameNumbers('AntJumping', {
+                start: 5, end: 6
+            }),
+            frameRate: 7
+        });
+        this.anims.create({
             key: 'AntFalling',
             frames: this.anims.generateFrameNumbers('AntFalling', {
                 start: 0, end: 0
             }),
             frameRate: 7
-        });*/
+        });
+        */
 
         this.antP1 = new Ant(this, 100, 280, 'AntRunning');
         this.antP1.setScale(2/3,2/3);
