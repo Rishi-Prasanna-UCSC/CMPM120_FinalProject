@@ -8,11 +8,11 @@ class Ant extends Phaser.Physics.Arcade.Sprite {
         // If false, use onGround's status.
         // If true, swim.
         // We won't use this for our current state of the Endless Runner.
-        // this.inWater = false;
+        this.inWater = false;
     }
 
     update(){
-        
+
     }
 
     // // jump(){
