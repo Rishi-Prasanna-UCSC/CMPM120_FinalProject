@@ -53,20 +53,30 @@ class Play extends Phaser.Scene {
         });
         
 
-        this.antP1 = new Ant(this, 100, 280, 'AntRunning');
-        this.antP1.setScale(2/3,2/3);
-        this.antP1.anims.play('AntRunning');
-
         // Make a platform.
         this.platformGroup = this.physics.add.group();
         for (let i = 0; i < 10; i++) {
             // Add platform.
-            let platform = this.physics.add.sprite(400*i + 100, 400, 'Platform');
+            let platform = this.physics.add.sprite(600*i + 100, 400, 'Platform');
 
             // Change hitbox of platform.
 
             this.platformGroup.add(platform);
+
+            // Don't let ant push platforms down.
+            platform.body.immovable = true;
+            platform.body.allowGravity = false;
+
+            // We 
+            platform.setVelocityX(-300);
+
         }
+
+        this.antP1 = new Ant(this, 100, 280, 'AntRunning');
+        this.antP1.setGravityY(600);
+        this.antP1.setScale(2/3,2/3);
+        this.physics.add.collider(this.antP1, this.platformGroup);
+
 
 
 
@@ -95,10 +105,24 @@ class Play extends Phaser.Scene {
         // }
         this.antP1.update();
 
-        if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
-            this.antP1.jump = true;
-            this.antP1.anims.play('AntJumping');
+        // If you are touching the ground.
+        if (this.antP1.body.touching.down) {
+            this.antP1.anims.play('AntRunning', true);
         }
+        else if (this.antP1.body.wasTouching.down) {
+            this.antP1.anims.play('AntFalling', true);
+        }
+
+        // If you are pressing space AND you are touching the platform...
+        if ((Phaser.Input.Keyboard.JustDown(keySPACE)) 
+        && (this.antP1.body.touching.down)) {
+            this.antP1.setVelocityY(-500);
+            this.antP1.anims.play('AntJumping');
+            /*this.fall = this.time.delayedCall(400, () => {
+                this.antP1.anims.play('AntFalling', true);
+            }, null, this);*/
+        }
+        
         /*
         if (this.antP1.isOffScreen()) {
             this.GPBG.tilePositionX -= 1;
