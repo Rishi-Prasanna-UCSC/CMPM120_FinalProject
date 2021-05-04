@@ -35,7 +35,6 @@ class Play extends Phaser.Scene {
             }),
             frameRate: 7,
             repeat: -1
-
         });
         // Jumping Ant Animation.
         this.anims.create({
@@ -59,7 +58,7 @@ class Play extends Phaser.Scene {
         this.platformGroup = this.physics.add.group();
         for (let i = 0; i < 10; i++) {
             // Add platform.
-            let platform = this.physics.add.sprite(600*i + 100, 400, 'Platform');
+            let platform = this.physics.add.sprite(600*i + 100, 420, 'Platform');
 
             // Change hitbox of platform.
 
@@ -73,16 +72,16 @@ class Play extends Phaser.Scene {
             platform.setVelocityX(this.runSpeed);
         }
 
-        this.antP1 = new Ant(this, 100, 280, 'AntRunning');
+        this.antP1 = new Ant(this, 100, 340, 'AntRunning');
         this.antP1.setGravityY(600);
-        this.antP1.setScale(2/3,2/3);
+        this.antP1.setScale(0.35,0.35);
         this.physics.add.collider(this.antP1, this.platformGroup);
 
 
         // Create spiders.
         this.enemiesGroup = this.physics.add.group();
         for (let i = 0; i < 10; i++) {
-            let enemy = this.physics.add.sprite(100*i,this.antP1.y,'Pause');
+            let enemy = this.physics.add.sprite(1000*i,this.antP1.y,'Pause');
             this.enemiesGroup.add(enemy);
             enemy.setVelocityX(this.runSpeed);
 
@@ -115,23 +114,30 @@ class Play extends Phaser.Scene {
         // }
         this.antP1.update();
 
-        // If you are touching the ground.
-        if (this.antP1.body.touching.down) {
+
+        if ((Phaser.Input.Keyboard.JustDown(keySPACE)) 
+        && (this.antP1.body.touching.down)) {
+            this.antP1.jump = true;
+            this.antP1.setVelocityY(-500);
+            this.antP1.anims.play('AntJumping');
+            this.time.delayedCall(800, () => {
+                this.antP1.jump = false;
+            }, null, this);
+        }
+
+        // If you are touching the platform.
+        else if (this.antP1.body.touching.down) {
             this.antP1.anims.play('AntRunning', true);
         }
-        else if (this.antP1.body.wasTouching.down) {
-            this.antP1.anims.play('AntFalling', true);
+        
+        else {
+            if (!this.antP1.jump) {
+                this.antP1.anims.play('AntFalling');
+            }
         }
 
         // If you are pressing space AND you are touching the platform...
-        if ((Phaser.Input.Keyboard.JustDown(keySPACE)) 
-        && (this.antP1.body.touching.down)) {
-            this.antP1.setVelocityY(-500);
-            this.antP1.anims.play('AntJumping');
-            /*this.fall = this.time.delayedCall(400, () => {
-                this.antP1.anims.play('AntFalling', true);
-            }, null, this);*/
-        }
+        
         
         /*
         if (this.antP1.isOffScreen()) {

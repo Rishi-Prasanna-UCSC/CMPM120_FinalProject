@@ -4,6 +4,8 @@ class Ant extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
+        // Jumping.
+        this.jump = false;
 
         // If false, use onGround's status.
         // If true, swim.
