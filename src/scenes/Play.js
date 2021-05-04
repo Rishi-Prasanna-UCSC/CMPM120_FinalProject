@@ -16,6 +16,8 @@ class Play extends Phaser.Scene {
     }
 
     create(){
+        this.runSpeed = -300;
+
         // Define keys.
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
@@ -68,8 +70,7 @@ class Play extends Phaser.Scene {
             platform.body.allowGravity = false;
 
             // We 
-            platform.setVelocityX(-300);
-
+            platform.setVelocityX(this.runSpeed);
         }
 
         this.antP1 = new Ant(this, 100, 280, 'AntRunning');
@@ -78,6 +79,15 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.antP1, this.platformGroup);
 
 
+        // Create spiders.
+        this.enemiesGroup = this.physics.add.group();
+        for (let i = 0; i < 10; i++) {
+            let enemy = this.physics.add.sprite(100*i,this.antP1.y,'Pause');
+            this.enemiesGroup.add(enemy);
+            enemy.setVelocityX(this.runSpeed);
+
+        }
+        this.physics.add.collider(this.antP1, this.enemiesGroup, null, this.touchedEnemy, this);
 
 
 
@@ -131,5 +141,14 @@ class Play extends Phaser.Scene {
             }, null, this);
         }
         */
+    }
+
+    touchedEnemy(ant, enemy) {
+        this.GPBG.tilePositionX -= 1;
+        this.time.delayedCall(1500, () => {
+            this.scene.start("gameoverScene");
+        }, null, this);
+        
+        this.enemiesGroup.remove(enemy);
     }
 }
