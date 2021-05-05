@@ -58,9 +58,8 @@ class Play extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('Ant', {
                 start: 7, end: 11
             }),
-            frameRate: 9
+            frameRate: 6
         });
-        
 
         // Make a platform.
         this.platformGroup = this.physics.add.group();
@@ -100,8 +99,6 @@ class Play extends Phaser.Scene {
 
 
 
-
-
         //player sprite
         // this.player = new Player (this,
         //     game.config.width / 2,
@@ -110,55 +107,45 @@ class Play extends Phaser.Scene {
     }
 
     update(){
-        this.GPBG.tilePositionX += 1;
         // this.starfield.tilePositionX -= 4; //replace with actual background
 
         this.antP1.update();
 
-
         // If you are touching the platform and you press space.
-        if ((Phaser.Input.Keyboard.JustDown(keySPACE)) 
-        && (this.antP1.body.touching.down)) {
-            this.antP1.jump = true;
-            this.antP1.setVelocityY(-500);
-            this.antP1.anims.play('AntJumping');
-            this.time.delayedCall(800, () => {
-                this.antP1.jump = false;
-            }, null, this);
-        }
-
-        // If you are only touching the platform.
-        else if (this.antP1.body.touching.down) {
-            this.antP1.anims.play('AntRunning', true);
-        }
-
-        // If you are not touching the platform.
-        else {
-            if (!this.antP1.jump) {
-                this.antP1.anims.play('AntFalling');
+        if (!this.antP1.spidered) {
+            this.GPBG.tilePositionX += 1;
+            if ((Phaser.Input.Keyboard.JustDown(keySPACE)) 
+            && (this.antP1.body.touching.down)) {
+                this.antP1.jump = true;
+                this.antP1.setVelocityY(-500);
+                this.antP1.anims.play('AntJumping');
+                this.time.delayedCall(800, () => {
+                    this.antP1.jump = false;
+                }, null, this);
             }
-        }
 
-        // If you are pressing space AND you are touching the platform...
-        
-        
-        /*
-        if (this.antP1.isOffScreen()) {
-            this.GPBG.tilePositionX -= 1;
-            this.time.delayedCall(1500, () => {
-                this.scene.start("gameoverScene");
-            }, null, this);
+            // If you are only touching the platform.
+            else if (this.antP1.body.touching.down) {
+                this.antP1.anims.play('AntRunning', true);
+            }
+
+                    // If you are not touching the platform.
+                    else {
+                        if (!this.antP1.jump) {
+                            this.antP1.anims.play('AntFalling');
+                        }
+                    }
         }
-        */
     }
 
     touchedEnemy(ant, enemy) {
         this.GPBG.tilePositionX -= 1;
+        ant.setVelocityY(0);
         ant.anims.play('AntWebbed');
         this.time.delayedCall(3000, () => {
             this.scene.start("gameoverScene");
         }, null, this);
-        
-        this.enemiesGroup.remove(enemy);
+        ant.spidered = true;
+        //this.enemiesGroup.remove(enemy);
     }
 }

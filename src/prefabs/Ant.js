@@ -7,6 +7,9 @@ class Ant extends Phaser.Physics.Arcade.Sprite {
         // Jumping.
         this.jump = false;
 
+        // Got eaten by spider.
+        this.spidered = false;
+
         // If false, use onGround's status.
         // If true, swim.
         // We won't use this for our current state of the Endless Runner.
