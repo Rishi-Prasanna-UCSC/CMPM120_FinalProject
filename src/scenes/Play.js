@@ -107,7 +107,6 @@ class Play extends Phaser.Scene {
     }
 
     update(){
-        // this.starfield.tilePositionX -= 4; //replace with actual background
 
         this.antP1.update();
 
@@ -129,18 +128,29 @@ class Play extends Phaser.Scene {
                 this.antP1.anims.play('AntRunning', true);
             }
 
-                    // If you are not touching the platform.
-                    else {
-                        if (!this.antP1.jump) {
-                            this.antP1.anims.play('AntFalling');
-                        }
-                    }
+            // If you are not touching the platform.
+            else {
+                if (!this.antP1.jump) {
+                    this.antP1.anims.play('AntFalling');
+                }
+            }
         }
     }
 
     touchedEnemy(ant, enemy) {
         this.GPBG.tilePositionX -= 1;
         ant.setVelocityY(0);
+        for (let i = 0;
+            i < this.platformGroup.children.entries.length;
+            i++) {
+            // Add platform.
+            this.platformGroup.children.entries[i].setVelocityX(0);
+        }
+        for (let i = 0;
+            i < this.enemiesGroup.children.entries.length;
+            i++) {
+            this.enemiesGroup.children.entries[i].setVelocityX(0);
+        }
         ant.anims.play('AntWebbed');
         this.time.delayedCall(3000, () => {
             this.scene.start("gameoverScene");
