@@ -100,30 +100,11 @@ class Play extends Phaser.Scene {
         }
         this.physics.add.collider(this.antP1, this.enemiesGroup, null, this.touchedEnemy, this);
 
-
-
-
-
-
-
-
-        //player sprite
-        // this.player = new Player (this,
-        //     game.config.width / 2,
-        //     game.config.height - borderUISize - borderPadding,
-        //     "player"); //adjust to sprite name
     }
 
     update() {
         this.GPBG.tilePositionX += 1;
-        // this.starfield.tilePositionX -= 4; //replace with actual background
 
-        //jump
-        // if (Phaser.Input.Keyboard.JustDown(keySPACE)){
-        //     //may need to be moved to player class
-        //     //fill code with jump
-        //     console.log("jumping!"); 
-        // }
         this.antP1.update();
 
         // If you are touching the ground.
@@ -152,6 +133,7 @@ class Play extends Phaser.Scene {
             }, null, this);
         }
         */
+       
     }
 
     touchedEnemy(ant, enemy) {
@@ -189,8 +171,14 @@ class Play extends Phaser.Scene {
 
         this.pauseDisp = this.add.text(350, 
             100, "Pause", pauseConfig);
-
         
+        this.pause.destroy();
+
+        this.scene.launch("pauseScene");
+        
+
+
+        // this.scene.resume(); 
 
     }
 }
