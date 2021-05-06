@@ -1,17 +1,14 @@
-class Ant extends Phaser.GameObjects.Sprite {
+class Ant extends Phaser.Physics.Arcade.Sprite {
     constructor (scene, x, y, texture, frame){
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
+        scene.physics.add.existing(this);
 
-        // Used for animation.
-        // If false, fall.
-        // If true, run.
-        this.onGround = true;
-
-        // Used for jumping.
-        // If false, fall.
-        // If true, jump.
+        // Jumping.
         this.jump = false;
+
+        // Got eaten by spider.
+        this.spidered = false;
 
         // If false, use onGround's status.
         // If true, swim.
@@ -20,29 +17,7 @@ class Ant extends Phaser.GameObjects.Sprite {
     }
 
     update(){
-        if (this.jump) {
-            this.y -= 10;
-        }
-        if (this.onGround) {
-            // Implement running.
-            ;
-        }
-        else {
-            // Falling.
 
-            this.y += 10;
-        }
-    }
-
-    isOffScreen(){
-        // Why 513?
-        // Because 513 is the screen height plus the height of the ant!
-        if (this.y > 626) {
-            return true;
-        }
-        else {
-            return false;
-        }
     }
 
     // // jump(){
