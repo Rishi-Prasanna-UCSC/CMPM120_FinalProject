@@ -16,6 +16,8 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        this.jumpCount = 0;
+
         this.runSpeed = -300;
 
         // Define keys.
@@ -34,7 +36,6 @@ class Play extends Phaser.Scene {
             // this.press.visible = false;
 
             this.pauseGame();
-
 
         });
 
@@ -103,6 +104,7 @@ class Play extends Phaser.Scene {
     }
 
     update() {
+
         this.GPBG.tilePositionX += 1;
 
         this.antP1.update();
@@ -110,6 +112,7 @@ class Play extends Phaser.Scene {
         // If you are touching the ground.
         if (this.antP1.body.touching.down) {
             this.antP1.anims.play('AntRunning', true);
+            this.jumpCount = 0;
         }
         else if (this.antP1.body.wasTouching.down) {
             this.antP1.anims.play('AntFalling', true);
@@ -117,9 +120,10 @@ class Play extends Phaser.Scene {
 
         // If you are pressing space AND you are touching the platform...
         if ((Phaser.Input.Keyboard.JustDown(keySPACE))
-            && (this.antP1.body.touching.down)) {
-            this.antP1.setVelocityY(-500);
-            this.antP1.anims.play('AntJumping');
+            && (this.jumpCount < 2)) {
+            this.jump(this.antP1);
+            this.jumpCount++;
+            console.log(this.jumpCount);
             /*this.fall = this.time.delayedCall(400, () => {
                 this.antP1.anims.play('AntFalling', true);
             }, null, this);*/
@@ -134,6 +138,11 @@ class Play extends Phaser.Scene {
         }
         */
 
+    }
+
+    jump(ant) {
+        ant.setVelocityY(-500);
+        ant.anims.play('AntJumping');
     }
 
     touchedEnemy(ant, enemy) {
