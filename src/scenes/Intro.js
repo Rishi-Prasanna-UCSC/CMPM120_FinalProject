@@ -10,6 +10,9 @@ class Intro extends Phaser.Scene {
     }
 
     create() {
+        //tester
+        this.scene.start("playScene"); 
+
         this.press = this.add.text(220, 220, 'Click on the screen to start the game');
         this.input.on("pointerdown", () => {
             this.press.visible = false;

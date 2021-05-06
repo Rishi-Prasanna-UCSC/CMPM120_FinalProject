@@ -11,7 +11,10 @@ class Menu extends Phaser.Scene {
 
     create(){
         this.MMBG = this.add.image(390, 220, 'MMBackground');
-        //this.scene.start("playScene");
+
+        
+        //this.scene.start("playScene"); 
+
         let play = this.add.image(640, 85, 'PlayButton');
         let characters = this.add.image(640, 215, 'CharacterButton');
         let credits = this.add.image(640, 345, 'CreditsButton');

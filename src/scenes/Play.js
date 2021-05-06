@@ -1,5 +1,5 @@
 class Play extends Phaser.Scene {
-    constructor(){
+    constructor() {
         super("playScene");
     }
 
@@ -12,10 +12,10 @@ class Play extends Phaser.Scene {
         this.load.image('Platform', 'assets/Platform.png');
 
         // Load player spritesheet for running.
-        this.load.spritesheet('AntRunning', 'assets/AntSpritesheet.png', {frameWidth: 150, frameHeight: 271});
+        this.load.spritesheet('AntRunning', 'assets/AntSpritesheet.png', { frameWidth: 150, frameHeight: 271 });
     }
 
-    create(){
+    create() {
         this.runSpeed = -300;
 
         // Define keys.
@@ -25,7 +25,18 @@ class Play extends Phaser.Scene {
         // Gameplay background.
         this.GPBG = this.add.tileSprite(0, 0, 780, 440,
             'GPBackground01').setOrigin(0, 0);
+
         this.pause = this.add.image(720, 50, 'Pause');
+
+        this.pause.setInteractive();
+
+        this.pause.on("pointerdown", () => {
+            // this.press.visible = false;
+
+            this.pauseGame();
+
+
+        });
 
         // Running Ant Animation.
         this.anims.create({
@@ -53,13 +64,13 @@ class Play extends Phaser.Scene {
             }),
             frameRate: 9
         });
-        
+
 
         // Make a platform.
         this.platformGroup = this.physics.add.group();
         for (let i = 0; i < 10; i++) {
             // Add platform.
-            let platform = this.physics.add.sprite(600*i + 100, 400, 'Platform');
+            let platform = this.physics.add.sprite(600 * i + 100, 400, 'Platform');
 
             // Change hitbox of platform.
 
@@ -75,14 +86,14 @@ class Play extends Phaser.Scene {
 
         this.antP1 = new Ant(this, 100, 280, 'AntRunning');
         this.antP1.setGravityY(600);
-        this.antP1.setScale(2/3,2/3);
+        this.antP1.setScale(2 / 3, 2 / 3);
         this.physics.add.collider(this.antP1, this.platformGroup);
 
 
         // Create spiders.
         this.enemiesGroup = this.physics.add.group();
         for (let i = 0; i < 10; i++) {
-            let enemy = this.physics.add.sprite(100*i,this.antP1.y,'Pause');
+            let enemy = this.physics.add.sprite(100 * i, this.antP1.y, 'Pause');
             this.enemiesGroup.add(enemy);
             enemy.setVelocityX(this.runSpeed);
 
@@ -103,7 +114,7 @@ class Play extends Phaser.Scene {
         //     "player"); //adjust to sprite name
     }
 
-    update(){
+    update() {
         this.GPBG.tilePositionX += 1;
         // this.starfield.tilePositionX -= 4; //replace with actual background
 
@@ -124,15 +135,15 @@ class Play extends Phaser.Scene {
         }
 
         // If you are pressing space AND you are touching the platform...
-        if ((Phaser.Input.Keyboard.JustDown(keySPACE)) 
-        && (this.antP1.body.touching.down)) {
+        if ((Phaser.Input.Keyboard.JustDown(keySPACE))
+            && (this.antP1.body.touching.down)) {
             this.antP1.setVelocityY(-500);
             this.antP1.anims.play('AntJumping');
             /*this.fall = this.time.delayedCall(400, () => {
                 this.antP1.anims.play('AntFalling', true);
             }, null, this);*/
         }
-        
+
         /*
         if (this.antP1.isOffScreen()) {
             this.GPBG.tilePositionX -= 1;
@@ -148,7 +159,19 @@ class Play extends Phaser.Scene {
         this.time.delayedCall(1500, () => {
             this.scene.start("gameoverScene");
         }, null, this);
-        
+
         this.enemiesGroup.remove(enemy);
+    }
+
+    pauseGame() {
+
+        this.scene.pause();
+        // this.scene.launch("pauseScene");
+        // this.scene.start("pauseScene");
+        console.log("working");
+
+        // if (this.scene.paused == true){
+        //     this.scene.resume();
+        // }
     }
 }
