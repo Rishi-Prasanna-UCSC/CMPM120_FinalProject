@@ -173,5 +173,24 @@ class Play extends Phaser.Scene {
         // if (this.scene.paused == true){
         //     this.scene.resume();
         // }
+
+        let pauseConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            // fixedWidth: 100
+        }
+
+        this.pauseDisp = this.add.text(350, 
+            100, "Pause", pauseConfig);
+
+        
+
     }
 }
