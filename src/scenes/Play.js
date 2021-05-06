@@ -133,7 +133,7 @@ class Play extends Phaser.Scene {
             }, null, this);
         }
         */
-       
+
     }
 
     touchedEnemy(ant, enemy) {
@@ -169,13 +169,27 @@ class Play extends Phaser.Scene {
             // fixedWidth: 100
         }
 
-        this.pauseDisp = this.add.text(350, 
+        this.pauseDisp = this.add.text(350,
             100, "Pause", pauseConfig);
-        
+
+        this.homeDisp = this.add.text(360,
+            150, "Home", pauseConfig);
+
         this.pause.destroy();
 
         this.scene.launch("pauseScene");
-        
+
+        this.resume = this.add.image(720, 50, 'Pause');
+
+        this.resume.setInteractive();
+
+        this.resume.on("pointerdown", () => {
+            this.scene.resume();
+            console.log("test");
+        });
+
+        // console.log("fuck you");
+
 
 
         // this.scene.resume(); 
