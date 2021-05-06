@@ -5,8 +5,8 @@ class Intro extends Phaser.Scene {
     }
 
     preload() {
-        this.load.audio('Text', '../../assets/IntroSound.wav');
-        this.load.audio('Hide', '../../assets/IntroSoundHideText.wav');
+        this.load.audio('Text', 'assets/IntroSound.wav');
+        this.load.audio('Hide', 'assets/IntroSoundHideText.wav');
     }
 
     create() {
