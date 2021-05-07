@@ -1,5 +1,5 @@
 class Play extends Phaser.Scene {
-    constructor() {
+    constructor(){
         super("playScene");
     }
 
@@ -12,12 +12,10 @@ class Play extends Phaser.Scene {
         this.load.image('Platform', 'assets/Platform.png');
 
         // Load player spritesheet for running.
-        this.load.spritesheet('AntRunning', 'assets/AntSpritesheet.png', { frameWidth: 150, frameHeight: 271 });
+        this.load.spritesheet('Ant', 'assets/AntSpritesheet.png', {frameWidth: 150, frameHeight: 271});
     }
 
-    create() {
-        this.jumpCount = 0;
-
+    create(){
         this.runSpeed = -300;
 
         // Define keys.
@@ -27,32 +25,21 @@ class Play extends Phaser.Scene {
         // Gameplay background.
         this.GPBG = this.add.tileSprite(0, 0, 780, 440,
             'GPBackground01').setOrigin(0, 0);
-
         this.pause = this.add.image(720, 50, 'Pause');
-
-        this.pause.setInteractive();
-
-        this.pause.on("pointerdown", () => {
-            // this.press.visible = false;
-
-            this.pauseGame();
-
-        });
 
         // Running Ant Animation.
         this.anims.create({
             key: 'AntRunning',
-            frames: this.anims.generateFrameNumbers('AntRunning', {
+            frames: this.anims.generateFrameNumbers('Ant', {
                 start: 1, end: 4
             }),
             frameRate: 7,
             repeat: -1
-
         });
         // Jumping Ant Animation.
         this.anims.create({
             key: 'AntJumping',
-            frames: this.anims.generateFrameNumbers('AntRunning', {
+            frames: this.anims.generateFrameNumbers('Ant', {
                 start: 5, end: 6
             }),
             frameRate: 10
@@ -60,18 +47,25 @@ class Play extends Phaser.Scene {
         // Falling Ant Animation.
         this.anims.create({
             key: 'AntFalling',
-            frames: this.anims.generateFrameNumbers('AntRunning', {
+            frames: this.anims.generateFrameNumbers('Ant', {
                 start: 0, end: 0
             }),
             frameRate: 9
         });
-
+        // Dying by spider Animation.
+        this.anims.create({
+            key: 'AntWebbed',
+            frames: this.anims.generateFrameNumbers('Ant', {
+                start: 7, end: 11
+            }),
+            frameRate: 6
+        });
 
         // Make a platform.
         this.platformGroup = this.physics.add.group();
         for (let i = 0; i < 10; i++) {
             // Add platform.
-            let platform = this.physics.add.sprite(600 * i + 100, 400, 'Platform');
+            let platform = this.physics.add.sprite(600*i + 100, 420, 'Platform');
 
             // Change hitbox of platform.
 
@@ -85,106 +79,83 @@ class Play extends Phaser.Scene {
             platform.setVelocityX(this.runSpeed);
         }
 
-        this.antP1 = new Ant(this, 100, 280, 'AntRunning');
+        this.antP1 = new Ant(this, 100, 340, 'Ant');
         this.antP1.setGravityY(600);
-        this.antP1.setScale(2 / 3, 2 / 3);
+        this.antP1.setScale(0.35,0.35);
         this.physics.add.collider(this.antP1, this.platformGroup);
 
 
         // Create spiders.
         this.enemiesGroup = this.physics.add.group();
         for (let i = 0; i < 10; i++) {
-            let enemy = this.physics.add.sprite(100 * i, this.antP1.y, 'Pause');
+            let enemy = this.physics.add.sprite(1000*i,this.antP1.y,'Pause');
             this.enemiesGroup.add(enemy);
             enemy.setVelocityX(this.runSpeed);
-
         }
         this.physics.add.collider(this.antP1, this.enemiesGroup, null, this.touchedEnemy, this);
 
+
+
+
+
+
+        //player sprite
+        // this.player = new Player (this,
+        //     game.config.width / 2,
+        //     game.config.height - borderUISize - borderPadding,
+        //     "player"); //adjust to sprite name
     }
 
-    update() {
-
-        this.GPBG.tilePositionX += 1;
+    update(){
 
         this.antP1.update();
 
-        // If you are touching the ground.
-        if (this.antP1.body.touching.down) {
-            this.antP1.anims.play('AntRunning', true);
-            this.jumpCount = 0;
-        }
-        else if (this.antP1.body.wasTouching.down) {
-            this.antP1.anims.play('AntFalling', true);
-        }
+        // If you are touching the platform and you press space.
+        if (!this.antP1.spidered) {
+            this.GPBG.tilePositionX += 1;
+            if ((Phaser.Input.Keyboard.JustDown(keySPACE)) 
+            && (this.antP1.body.touching.down)) {
+                this.antP1.jump = true;
+                this.antP1.setVelocityY(-500);
+                this.antP1.anims.play('AntJumping');
+                this.time.delayedCall(800, () => {
+                    this.antP1.jump = false;
+                }, null, this);
+            }
 
-        // If you are pressing space AND you are touching the platform...
-        if ((Phaser.Input.Keyboard.JustDown(keySPACE))
-            && (this.jumpCount < 2)) {
-            this.jump(this.antP1);
-            this.jumpCount++;
-            console.log(this.jumpCount);
-            /*this.fall = this.time.delayedCall(400, () => {
-                this.antP1.anims.play('AntFalling', true);
-            }, null, this);*/
+            // If you are only touching the platform.
+            else if (this.antP1.body.touching.down) {
+                this.antP1.anims.play('AntRunning', true);
+            }
+
+            // If you are not touching the platform.
+            else {
+                if (!this.antP1.jump) {
+                    this.antP1.anims.play('AntFalling');
+                }
+            }
         }
-
-        /*
-        if (this.antP1.isOffScreen()) {
-            this.GPBG.tilePositionX -= 1;
-            this.time.delayedCall(1500, () => {
-                this.scene.start("gameoverScene");
-            }, null, this);
-        }
-        */
-
-    }
-
-    jump(ant) {
-        ant.setVelocityY(-500);
-        ant.anims.play('AntJumping');
     }
 
     touchedEnemy(ant, enemy) {
         this.GPBG.tilePositionX -= 1;
-        this.time.delayedCall(1500, () => {
+        ant.setVelocityY(0);
+        for (let i = 0;
+            i < this.platformGroup.children.entries.length;
+            i++) {
+            // Add platform.
+            this.platformGroup.children.entries[i].setVelocityX(0);
+        }
+        for (let i = 0;
+            i < this.enemiesGroup.children.entries.length;
+            i++) {
+            this.enemiesGroup.children.entries[i].setVelocityX(0);
+        }
+        ant.anims.play('AntWebbed');
+        this.time.delayedCall(3000, () => {
             this.scene.start("gameoverScene");
         }, null, this);
-
-        this.enemiesGroup.remove(enemy);
-    }
-
-    pauseGame() {
-
-        this.scene.pause();
-        // this.scene.launch("pauseScene");
-        // this.scene.start("pauseScene");
-        // console.log("working");
-
-        // if (this.scene.paused == true){
-        //     this.scene.resume();
-        // }
-
-        
-
-        // this.pause.destroy();
-
-        this.scene.launch("pauseScene");
-
-        // this.resume = this.add.image(720, 50, 'Pause');
-
-        // this.resume.setInteractive();
-
-        // this.resume.on("pointerdown", () => {
-        //     this.scene.resume();
-        //     console.log("test");
-        // });
-
-        // console.log("fuck you");
-
-
-
-        // this.scene.resume(); 
-
+        ant.spidered = true;
+        //this.enemiesGroup.remove(enemy);
     }
 }
