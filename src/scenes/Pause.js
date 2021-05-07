@@ -5,7 +5,7 @@ class Pause extends Phaser.Scene {
 
     preload(){
         this.load.image('Pause', 'assets/PauseButton.png');
-        this.load.image('MMBackground', '../../assets/MainMenuBackground.png');
+        this.load.image('MMBackground', 'assets/MainMenuBackground.png');
     }
 
     create(){

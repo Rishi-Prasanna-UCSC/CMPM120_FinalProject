@@ -3,8 +3,8 @@ class GameOver extends Phaser.Scene {
         super("gameoverScene");
     }
     preload(){
-        this.load.image('GOBackground', '../../assets/GOBackground.png');
-        this.load.image('TAButton', '../../assets/TryAgainButton.png');
+        this.load.image('GOBackground', 'assets/GOBackground.png');
+        this.load.image('TAButton', 'assets/TryAgainButton.png');
     }
 
     create(){
