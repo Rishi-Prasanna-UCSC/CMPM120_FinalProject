@@ -17,9 +17,7 @@ class Pause extends Phaser.Scene {
         this.resume.on("pointerdown", () => {
             this.scene.resume("playScene");
             // console.log("test");
-            this.scene.stop();
-            
-        }); 
+        });
 
         let pauseConfig = {
             fontFamily: 'Courier',
