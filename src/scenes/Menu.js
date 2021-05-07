@@ -3,10 +3,10 @@ class Menu extends Phaser.Scene {
         super("menuScene");
     }
     preload(){
-        this.load.image('MMBackground', '../../assets/MainMenuBackground.png');
-        this.load.image('PlayButton', '../../assets/PlayButton.png');
-        this.load.image('CharacterButton', '../../assets/ChooseCharacterButton.png');
-        this.load.image('CreditsButton', '../../assets/CreditsButton.png');
+        this.load.image('MMBackground', 'assets/MainMenuBackground.png');
+        this.load.image('PlayButton', 'assets/PlayButton.png');
+        this.load.image('CharacterButton', 'assets/ChooseCharacterButton.png');
+        this.load.image('CreditsButton', 'assets/CreditsButton.png');
     }
 
     create(){
