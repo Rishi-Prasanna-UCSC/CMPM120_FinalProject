@@ -159,43 +159,26 @@ class Play extends Phaser.Scene {
         this.scene.pause();
         // this.scene.launch("pauseScene");
         // this.scene.start("pauseScene");
-        console.log("working");
+        // console.log("working");
 
         // if (this.scene.paused == true){
         //     this.scene.resume();
         // }
 
-        let pauseConfig = {
-            fontFamily: 'Courier',
-            fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
-            align: 'right',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-            // fixedWidth: 100
-        }
+        
 
-        this.pauseDisp = this.add.text(350,
-            100, "Pause", pauseConfig);
-
-        this.homeDisp = this.add.text(360,
-            150, "Home", pauseConfig);
-
-        this.pause.destroy();
+        // this.pause.destroy();
 
         this.scene.launch("pauseScene");
 
-        this.resume = this.add.image(720, 50, 'Pause');
+        // this.resume = this.add.image(720, 50, 'Pause');
 
-        this.resume.setInteractive();
+        // this.resume.setInteractive();
 
-        this.resume.on("pointerdown", () => {
-            this.scene.resume();
-            console.log("test");
-        });
+        // this.resume.on("pointerdown", () => {
+        //     this.scene.resume();
+        //     console.log("test");
+        // });
 
         // console.log("fuck you");
 
