@@ -14,7 +14,7 @@ class Menu extends Phaser.Scene {
         
         this.MMBG = this.add.image(390, 220, 'MMBackground');
         
-        var music = this.sound.add('musicaudio');
+        var music = this.sound.add('Music');
         music.setLoop(true);
         music.play();
 
