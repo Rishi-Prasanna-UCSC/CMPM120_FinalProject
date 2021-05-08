@@ -37,15 +37,22 @@ class Pause extends Phaser.Scene {
 
         this.homeDisp = this.add.text(360,
             150, "Home", pauseConfig);
-
+        
+        this.pauseDisp.setInteractive();
         this.homeDisp.setInteractive();
+
+        this.pauseDisp.on("pointerdown", () => {
+            this.scene.stop("pauseScene");
+            this.scene.resume("playScene");
+            // console.log("test");
+            // this.scene.stop();
+        });
 
         this.homeDisp.on("pointerdown", () => {
             this.scene.stop("playScene");
             this.scene.start("menuScene");
             // console.log("test");
             // this.scene.stop();
-            
         }); 
 
     }

@@ -7,10 +7,16 @@ class Menu extends Phaser.Scene {
         this.load.image('PlayButton', 'assets/PlayButton.png');
         this.load.image('CharacterButton', 'assets/ChooseCharacterButton.png');
         this.load.image('CreditsButton', 'assets/CreditsButton.png');
+        this.load.audio('Music', 'assets/BigBugRunScore.wav');
     }
 
     create(){
+        
         this.MMBG = this.add.image(390, 220, 'MMBackground');
+        
+        var music = this.sound.add('musicaudio');
+        music.setLoop(true);
+        music.play();
 
         
         //this.scene.start("playScene"); 
