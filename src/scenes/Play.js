@@ -19,6 +19,27 @@ class Play extends Phaser.Scene {
 
     create(){
         this.runSpeed = -300;
+        score = 0;
+        distance = 0;
+
+        let scoreConfig = {
+            fontFamily: 'Laca',
+            fontSize: '35px',
+            backgroundColor: '#888800',
+            color: '#ffffff',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+                left: 5,
+                right: 5
+            },
+            // fixedWidth: 100
+        }
+        this.currentScore = this.add.text(50,
+            50, score, scoreConfig);
+        this.highScore = this.add.text(50,
+            680, highScore, scoreConfig);
 
         // Define keys.
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -98,7 +119,7 @@ class Play extends Phaser.Scene {
         this.enemiesGroup = this.physics.add.group();
         for (let i = 0; i < 10; i++) {
             let enemy = this.physics.add.sprite(1000*i + 700,this.antP1.y,'Spider');
-            enemy.setScale(0.7,0.7);
+            enemy.setScale(0.5,0.5);
             this.enemiesGroup.add(enemy);
             enemy.setVelocityX(this.runSpeed);
         }
@@ -117,13 +138,14 @@ class Play extends Phaser.Scene {
     }
 
     update(){
-
         this.antP1.update();
+
 
         // If you are touching the platform and you press space.
         if (this.isOffScreen()) {
-
             this.GPBG.tilePositionX -= 1;
+            score -= 10;
+            distance -= 1;
             this.antP1.setVelocityY(0);
             for (let i = 0;
                 i < this.platformGroup.children.entries.length;
@@ -142,6 +164,8 @@ class Play extends Phaser.Scene {
         }
         if (!this.antP1.spidered) {
             this.GPBG.tilePositionX += 1;
+            score += 10;
+            distance += 1;
             if ((Phaser.Input.Keyboard.JustDown(keySPACE)) 
             && (this.antP1.body.touching.down)) {
                 this.antP1.jump = true;
@@ -168,6 +192,7 @@ class Play extends Phaser.Scene {
 
     touchedEnemy(ant, enemy) {
         this.GPBG.tilePositionX -= 1;
+        score -= 10;
         ant.setVelocityY(0);
         for (let i = 0;
             i < this.platformGroup.children.entries.length;

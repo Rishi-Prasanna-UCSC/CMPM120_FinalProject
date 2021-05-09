@@ -11,6 +11,24 @@ class GameOver extends Phaser.Scene {
         this.MMBG = this.add.image(390, 220, 'GOBackground');
         let TryAgain = this.add.image(390, 380, 'TAButton');
 
+        let scoreConfig = {
+            fontFamily: 'Laca',
+            fontSize: '35px',
+            backgroundColor: '#888800',
+            color: '#ffffff',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+                left: 5,
+                right: 5
+            },
+            // fixedWidth: 100
+        }
+
+        this.finalScore = this.add.text(50,
+            360, "Score: " + score, scoreConfig);
+
         // Set images to be interactive buttons.
         TryAgain.setInteractive();
 
