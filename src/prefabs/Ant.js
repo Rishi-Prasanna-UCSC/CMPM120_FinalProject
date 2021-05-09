@@ -14,10 +14,17 @@ class Ant extends Phaser.Physics.Arcade.Sprite {
         // If true, swim.
         // We won't use this for our current state of the Endless Runner.
         this.inWater = false;
+
+        // Used for jump mechanic.
+        this.jumpStrength = 60000;
     }
 
     update(){
 
+    }
+
+    resetJumpStrength() {
+        this.jumpStrength = 60000;
     }
 
     // // jump(){

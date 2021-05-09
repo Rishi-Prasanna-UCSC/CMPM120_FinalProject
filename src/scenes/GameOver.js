@@ -10,7 +10,6 @@ class GameOver extends Phaser.Scene {
     create(){
         this.MMBG = this.add.image(390, 220, 'GOBackground');
         let TryAgain = this.add.image(390, 380, 'TAButton');
-        //this.scene.start("playScene");
 
         // Set images to be interactive buttons.
         TryAgain.setInteractive();
