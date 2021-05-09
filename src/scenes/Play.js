@@ -54,9 +54,8 @@ class Play extends Phaser.Scene {
 
         this.pause.on("pointerdown", () => {
             this.scene.pause();
-            // this.pause.destroy();
+            // this.GPBG.destroy();
             this.scene.launch('pauseScene');
-            // console.log("pause");
         });
 
         // Running Ant Animation.
