@@ -16,7 +16,7 @@ class Pause extends Phaser.Scene {
             fontFamily: 'Courier',
             fontSize: '28px',
             backgroundColor: '#F3B141',
-            color: '#843605',
+            color: '#000000',
             align: 'right',
             padding: {
                 top: 5,
@@ -31,13 +31,13 @@ class Pause extends Phaser.Scene {
         this.homeDisp = this.add.text(360,
             150, "Home", pauseConfig);
 
-            console.log("display");
+            // console.log("display");
         
         this.resume.setInteractive();
         this.homeDisp.setInteractive();
 
         this.resume.on("pointerdown", () => {
-            console.log("test");
+            // console.log("test");
 
             this.scene.stop();
             this.scene.resume("playScene");
