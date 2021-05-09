@@ -27,6 +27,16 @@ class Play extends Phaser.Scene {
         // Gameplay background.
         this.GPBG = this.add.tileSprite(0, 0, 780, 440,
             'GPBackground01').setOrigin(0, 0);
+        
+        
+        this.pause = this.add.image(720, 50, 'Pause');
+        this.pause.setInteractive();
+    
+        this.pause.on("pointerdown", () => {
+            // this.press.visible = false;
+            this.scene.pause();
+            this.scene.start('pauseScene');
+        });
 
         this.scoreConfig = {
             fontFamily: 'Laca',
@@ -50,15 +60,6 @@ class Play extends Phaser.Scene {
 
         // Define keys.
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-
-        this.pause = this.add.image(720, 50, 'Pause');
-        this.pause.setInteractive();
-
-        this.pause.on("pointerdown", () => {
-            // this.press.visible = false;
-            this.scene.pause();
-            this.scene.start('pauseScene');
-        });
 
         // Running Ant Animation.
         this.anims.create({
