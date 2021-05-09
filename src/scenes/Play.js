@@ -21,8 +21,14 @@ class Play extends Phaser.Scene {
         this.runSpeed = -300;
         score = 0;
         distance = 0;
+        beatHighScore = false;
 
-        let scoreConfig = {
+        // Define background.
+        // Gameplay background.
+        this.GPBG = this.add.tileSprite(0, 0, 780, 440,
+            'GPBackground01').setOrigin(0, 0);
+
+        this.scoreConfig = {
             fontFamily: 'Laca',
             fontSize: '35px',
             backgroundColor: '#888800',
@@ -36,18 +42,15 @@ class Play extends Phaser.Scene {
             },
             // fixedWidth: 100
         }
+        
         this.currentScore = this.add.text(50,
-            50, score, scoreConfig);
-        this.highScore = this.add.text(50,
-            680, highScore, scoreConfig);
+            50, score, this.scoreConfig);
+        this.high = this.add.text(360,
+            50, highScore, this.scoreConfig);
 
         // Define keys.
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-        // Define background.
-        // Gameplay background.
-        this.GPBG = this.add.tileSprite(0, 0, 780, 440,
-            'GPBackground01').setOrigin(0, 0);
         this.pause = this.add.image(720, 50, 'Pause');
         this.pause.setInteractive();
 
@@ -139,6 +142,12 @@ class Play extends Phaser.Scene {
 
     update(){
         this.antP1.update();
+        this.currentScore.text = score;
+        if (score > highScore) {
+            highScore = score;
+            beatHighScore = true;
+        }
+        this.high.text = highScore;
 
 
         // If you are touching the platform and you press space.
