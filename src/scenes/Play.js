@@ -21,6 +21,7 @@ class Play extends Phaser.Scene {
         this.runSpeed = -300;
         score = 0;
         distance = 0;
+        this.lastPlatDist = 0;
         beatHighScore = false;
 
         // Define background.
@@ -145,10 +146,10 @@ class Play extends Phaser.Scene {
         this.antP1.update();
         this.currentScore.text = score;
 
-        if (distance % 25 == 0) {
+        if (distance + 780 > this.lastPlatDist) {
             // Add platform.
-            let platform = this.physics.add.sprite(5*distance, 420, 'Platform');
-
+            let platform = this.physics.add.sprite(this.lastPlatDist, 420, 'Platform');
+            this.lastPlatDist += platform.width;
             this.platformGroup.add(platform);
 
             // Don't let ant push platforms down.
@@ -156,9 +157,8 @@ class Play extends Phaser.Scene {
             platform.body.allowGravity = false;
 
             platform.setVelocityX(this.runSpeed);
-            distance++;
         }
-        distance++;
+        distance -= this.runSpeed;
 
         if (score > highScore) {
             highScore = score;
