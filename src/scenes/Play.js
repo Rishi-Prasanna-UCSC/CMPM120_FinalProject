@@ -35,7 +35,7 @@ class Play extends Phaser.Scene {
         this.pause.on("pointerdown", () => {
             // this.press.visible = false;
             this.scene.pause();
-            this.scene.start('pauseScene');
+            this.scene.launch('pauseScene');
         });
 
         this.scoreConfig = {
@@ -97,11 +97,10 @@ class Play extends Phaser.Scene {
 
         // Make a platform.
         this.platformGroup = this.physics.add.group();
+        /*
         for (let i = 0; i < 10; i++) {
             // Add platform.
             let platform = this.physics.add.sprite(600*i + 100, 420, 'Platform');
-
-            // Change hitbox of platform.
 
             this.platformGroup.add(platform);
 
@@ -112,6 +111,7 @@ class Play extends Phaser.Scene {
             // We 
             platform.setVelocityX(this.runSpeed);
         }
+        */
 
         this.antP1 = new Ant(this, 100, 340, 'Ant');
         this.antP1.setGravityY(1000);
@@ -144,6 +144,22 @@ class Play extends Phaser.Scene {
     update(){
         this.antP1.update();
         this.currentScore.text = score;
+
+        if (distance % 25 == 0) {
+            // Add platform.
+            let platform = this.physics.add.sprite(5*distance, 420, 'Platform');
+
+            this.platformGroup.add(platform);
+
+            // Don't let ant push platforms down.
+            platform.body.immovable = true;
+            platform.body.allowGravity = false;
+
+            platform.setVelocityX(this.runSpeed);
+            distance++;
+        }
+        distance++;
+
         if (score > highScore) {
             highScore = score;
             beatHighScore = true;

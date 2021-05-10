@@ -25,7 +25,7 @@ class Pause extends Phaser.Scene {
         }
 
         this.pauseDisp = this.add.text(360,
-            100, "Pause", pauseConfig);
+            100, "Resume", pauseConfig);
 
         this.homeDisp = this.add.text(360,
             150, "Home", pauseConfig);
