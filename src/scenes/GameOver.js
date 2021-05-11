@@ -25,10 +25,30 @@ class GameOver extends Phaser.Scene {
             },
             // fixedWidth: 100
         }
+        let newBest = {
+            fontFamily: 'Laca',
+            fontSize: '20px',
+            backgroundColor: '#ff0000',
+            color: '#ffff00',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+                left: 5,
+                right: 5
+            },
+            // fixedWidth: 100
+        }
 
         this.finalScore = this.add.text(50,
             360, "Score: " + score, scoreConfig);
 
+        if (beatHighScore) {
+            this.newbest = this.add.text(50,
+                330, "NEW BEST!", newBest);
+        }
+        this.recHighScore = this.add.text(540,
+            360, "Best: " + highScore, scoreConfig);
         // Set images to be interactive buttons.
         TryAgain.setInteractive();
 
