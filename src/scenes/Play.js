@@ -160,7 +160,8 @@ class Play extends Phaser.Scene {
 
         if (distance % 100 == 0) {
             let fruit = this.physics.add.sprite(distance + 700,this.antP1.y - 150,'Fruit');
-            fruit.setScale(0.01,0.01);
+            //fruit.setScale(0.01,0.01);
+            fruit.setScale(0.25, 0.25);
             this.fruitGroup.add(fruit);
             fruit.setVelocityX(this.runSpeed);
         }
@@ -205,24 +206,7 @@ class Play extends Phaser.Scene {
 
         // If you are touching the platform and you press space.
         if (this.isOffScreen()) {
-            this.GPBG.tilePositionX -= 1;
-            score -= 10;
-            distance += this.runSpeed;
-            this.antP1.setVelocityY(0);
-            for (let i = 0;
-                i < this.platformGroup.children.entries.length;
-                i++) {
-                // Add platform.
-                this.platformGroup.children.entries[i].setVelocityX(0);
-            }
-            for (let i = 0;
-                i < this.enemiesGroup.children.entries.length;
-                i++) {
-                this.enemiesGroup.children.entries[i].setVelocityX(0);
-            }
-            this.time.delayedCall(2000, () => {
-                this.scene.start("gameoverScene");
-            }, null, this);
+            this.fellOffScreen();
         }
 
         if (!this.antP1.spidered) {
@@ -258,7 +242,6 @@ class Play extends Phaser.Scene {
 
     touchedEnemy(ant, enemy) {
         this.GPBG.tilePositionX -= 1;
-        score -= 10;
         ant.setVelocityY(0);
         for (let i = 0;
             i < this.platformGroup.children.entries.length;
@@ -289,5 +272,27 @@ class Play extends Phaser.Scene {
         else {
             return false;
         }
+    }
+
+    fellOffScreen() {
+        this.GPBG.tilePositionX -= 1;
+        this.fall = true;
+        score -= 10;
+        distance += this.runSpeed;
+        this.antP1.setVelocityY(0);
+        for (let i = 0;
+            i < this.platformGroup.children.entries.length;
+            i++) {
+            // Add platform.
+            this.platformGroup.children.entries[i].setVelocityX(0);
+        }
+        for (let i = 0;
+            i < this.enemiesGroup.children.entries.length;
+            i++) {
+            this.enemiesGroup.children.entries[i].setVelocityX(0);
+        }
+        this.time.delayedCall(2000, () => {
+            this.scene.start("gameoverScene");
+        }, null, this);
     }
 }
