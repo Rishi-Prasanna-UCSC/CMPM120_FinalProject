@@ -3,7 +3,7 @@ let config = {
     width: 780,
     height: 440,
     // scene: [Intro],
-    scene: [Intro, Menu, Play, Pause, GameOver], // Real version of game
+    scene: [Intro, Menu, Pause, Play, GameOver], // Real version of game
     // scene: [Play], // Debug
     physics: {
         default: 'arcade',
@@ -22,4 +22,4 @@ let keySPACE;
 var score = 0;
 var highScore = 0;
 var distance = 0;
-var beatHighScore = false;
+
