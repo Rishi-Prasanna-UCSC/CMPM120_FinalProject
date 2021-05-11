@@ -13,8 +13,14 @@ class Play extends Phaser.Scene {
         // Load platform.
         this.load.image('Platform', 'assets/Platform.png');
 
+        // Load fruit.
+        this.load.image('Fruit', 'assets/Fruit.png');
+
         // Load player spritesheet for running.
         this.load.spritesheet('Ant', 'assets/AntSpritesheet.png', {frameWidth: 150, frameHeight: 271});
+
+        // Load platform.
+        this.load.image('Platform', 'assets/Platform.png');
     }
 
     create(){
@@ -23,6 +29,9 @@ class Play extends Phaser.Scene {
         distance = 0;
         this.lastPlatDist = 0;
         beatHighScore = false;
+
+        // To keep track of jumping.
+        this.jumpTimer = 800;
 
         // Define background.
         // Gameplay background.
@@ -96,8 +105,10 @@ class Play extends Phaser.Scene {
             frameRate: 6
         });
 
-        // Make a platform.
+        // Make groups.
         this.platformGroup = this.physics.add.group();
+        this.fruitGroup = this.physics.add.group();
+        this.enemiesGroup = this.physics.add.group();
         /*
         for (let i = 0; i < 10; i++) {
             // Add platform.
@@ -121,13 +132,14 @@ class Play extends Phaser.Scene {
 
 
         // Create spiders.
-        this.enemiesGroup = this.physics.add.group();
         for (let i = 0; i < 10; i++) {
             let enemy = this.physics.add.sprite(1000*i + 700,this.antP1.y,'Spider');
             enemy.setScale(0.5,0.5);
             this.enemiesGroup.add(enemy);
             enemy.setVelocityX(this.runSpeed);
         }
+        
+        // this.physics.add.collider(this.antP1, this.enemiesGroup, null, this.touchedEnemy, this);
         this.physics.add.collider(this.antP1, this.enemiesGroup, null, this.touchedEnemy, this);
 
 
@@ -146,10 +158,29 @@ class Play extends Phaser.Scene {
         this.antP1.update();
         this.currentScore.text = score;
 
+        if (distance % 100 == 0) {
+            let fruit = this.physics.add.sprite(distance + 700,this.antP1.y - 150,'Fruit');
+            fruit.setScale(0.01,0.01);
+            this.fruitGroup.add(fruit);
+            fruit.setVelocityX(this.runSpeed);
+        }
+
+
+        
+        
         if (distance + 780 > this.lastPlatDist) {
             // Add platform.
-            let platform = this.physics.add.sprite(this.lastPlatDist, 420, 'Platform');
-            this.lastPlatDist += platform.width;
+            let platform = this.physics.add.sprite(this.lastPlatDist + 100, 420, 'Platform');
+
+            let rand = Math.floor(
+                Math.random() * 
+                (platform.width*2 - platform.width)
+                + platform.width); 
+
+            // The line that changes the distance between platforms.
+            this.lastPlatDist += rand;
+
+
             this.platformGroup.add(platform);
 
             // Don't let ant push platforms down.
@@ -167,11 +198,16 @@ class Play extends Phaser.Scene {
         this.high.text = highScore;
 
 
+        this.jumpTimer--;
+        if (this.jumpTimer <= 0) {
+            this.antP1.jump = false;
+        }
+
         // If you are touching the platform and you press space.
         if (this.isOffScreen()) {
             this.GPBG.tilePositionX -= 1;
             score -= 10;
-            distance -= 1;
+            distance += this.runSpeed;
             this.antP1.setVelocityY(0);
             for (let i = 0;
                 i < this.platformGroup.children.entries.length;
@@ -188,23 +224,27 @@ class Play extends Phaser.Scene {
                 this.scene.start("gameoverScene");
             }, null, this);
         }
+
         if (!this.antP1.spidered) {
             this.GPBG.tilePositionX += 1;
             score += 10;
-            distance += 1;
             if ((Phaser.Input.Keyboard.JustDown(keySPACE)) 
             && (this.antP1.body.touching.down)) {
                 this.antP1.jump = true;
                 this.antP1.setVelocityY(-550);
                 this.antP1.anims.play('AntJumping');
+
+                /*
                 this.time.delayedCall(800, () => {
                     this.antP1.jump = false;
                 }, null, this);
+                */
             }
 
             // If you are only touching the platform.
             else if (this.antP1.body.touching.down) {
                 this.antP1.anims.play('AntRunning', true);
+                this.jumpTimer = 800;
             }
 
             // If you are not touching the platform.
