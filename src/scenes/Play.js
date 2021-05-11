@@ -31,7 +31,7 @@ class Play extends Phaser.Scene {
         beatHighScore = false;
 
         // To keep track of jumping.
-        this.jumpTimer = 800;
+        this.jumpTimer = 35;
 
         // Define background.
         // Gameplay background.
@@ -51,7 +51,7 @@ class Play extends Phaser.Scene {
         this.scoreConfig = {
             fontFamily: 'Laca',
             fontSize: '35px',
-            backgroundColor: '#888800',
+            backgroundColor: '#88830',
             color: '#ffffff',
             align: 'right',
             padding: {
@@ -132,12 +132,14 @@ class Play extends Phaser.Scene {
 
 
         // Create spiders.
+        /*
         for (let i = 0; i < 10; i++) {
             let enemy = this.physics.add.sprite(1000*i + 700,this.antP1.y,'Spider');
             enemy.setScale(0.5,0.5);
             this.enemiesGroup.add(enemy);
             enemy.setVelocityX(this.runSpeed);
         }
+        */
         
         // this.physics.add.collider(this.antP1, this.enemiesGroup, null, this.touchedEnemy, this);
         this.physics.add.collider(this.antP1, this.enemiesGroup, null, this.touchedEnemy, this);
@@ -158,12 +160,19 @@ class Play extends Phaser.Scene {
         this.antP1.update();
         this.currentScore.text = score;
 
-        if (distance % 100 == 0) {
+        if (distance % 300 == 0) {
             let fruit = this.physics.add.sprite(distance + 700,this.antP1.y - 150,'Fruit');
             //fruit.setScale(0.01,0.01);
             fruit.setScale(0.25, 0.25);
             this.fruitGroup.add(fruit);
             fruit.setVelocityX(this.runSpeed);
+        }
+
+        if (distance % 500 == 0) {
+            let enemy = this.physics.add.sprite(distance + 700,this.antP1.y + 10,'Spider');
+            enemy.setScale(0.45,0.45);
+            this.enemiesGroup.add(enemy);
+            enemy.setVelocityX(this.runSpeed);
         }
 
 
@@ -219,7 +228,7 @@ class Play extends Phaser.Scene {
                 this.antP1.anims.play('AntJumping');
 
                 /*
-                this.time.delayedCall(800, () => {
+                this.time.delayedCall(30, () => {
                     this.antP1.jump = false;
                 }, null, this);
                 */
@@ -228,7 +237,7 @@ class Play extends Phaser.Scene {
             // If you are only touching the platform.
             else if (this.antP1.body.touching.down) {
                 this.antP1.anims.play('AntRunning', true);
-                this.jumpTimer = 800;
+                this.jumpTimer = 30;
             }
 
             // If you are not touching the platform.
