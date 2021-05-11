@@ -28,6 +28,7 @@ class Play extends Phaser.Scene {
         score = 0;
         distance = 0;
         this.lastPlatDist = 0;
+        this.lastEnemyDist = 0;
         beatHighScore = false;
 
         // To keep track of jumping.
@@ -109,37 +110,12 @@ class Play extends Phaser.Scene {
         this.platformGroup = this.physics.add.group();
         this.fruitGroup = this.physics.add.group();
         this.enemiesGroup = this.physics.add.group();
-        /*
-        for (let i = 0; i < 10; i++) {
-            // Add platform.
-            let platform = this.physics.add.sprite(600*i + 100, 420, 'Platform');
-
-            this.platformGroup.add(platform);
-
-            // Don't let ant push platforms down.
-            platform.body.immovable = true;
-            platform.body.allowGravity = false;
-
-            // We 
-            platform.setVelocityX(this.runSpeed);
-        }
-        */
 
         this.antP1 = new Ant(this, 100, 340, 'Ant');
         this.antP1.setGravityY(1000);
         this.antP1.setScale(0.35,0.35);
         this.physics.add.collider(this.antP1, this.platformGroup);
 
-
-        // Create spiders.
-        /*
-        for (let i = 0; i < 10; i++) {
-            let enemy = this.physics.add.sprite(1000*i + 700,this.antP1.y,'Spider');
-            enemy.setScale(0.5,0.5);
-            this.enemiesGroup.add(enemy);
-            enemy.setVelocityX(this.runSpeed);
-        }
-        */
         
         // this.physics.add.collider(this.antP1, this.enemiesGroup, null, this.touchedEnemy, this);
         this.physics.add.collider(this.antP1, this.enemiesGroup, null, this.touchedEnemy, this);
@@ -174,8 +150,6 @@ class Play extends Phaser.Scene {
             this.enemiesGroup.add(enemy);
             enemy.setVelocityX(this.runSpeed);
         }
-
-
         
         
         if (distance + 780 > this.lastPlatDist) {
@@ -188,7 +162,12 @@ class Play extends Phaser.Scene {
                 + platform.width); 
 
             // The line that changes the distance between platforms.
-            this.lastPlatDist += rand;
+            if (distance < 1000) {
+                this.lastPlatDist += platform.width;
+            }
+            else {
+                this.lastPlatDist += rand;
+            }
 
 
             this.platformGroup.add(platform);
@@ -263,7 +242,7 @@ class Play extends Phaser.Scene {
             i++) {
             this.enemiesGroup.children.entries[i].setVelocityX(0);
         }
-        ant.anims.play('AntWebbed');
+        if (!ant.spidered) {ant.anims.play('AntWebbed', true);}
         ant.spidered = true;
         this.time.delayedCall(3000, () => {
             this.scene.start("gameoverScene");
