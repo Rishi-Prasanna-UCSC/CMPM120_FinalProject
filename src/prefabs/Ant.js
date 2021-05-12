@@ -19,15 +19,11 @@ class Ant extends Phaser.Physics.Arcade.Sprite {
         this.inWater = false;
 
         // Used for jump mechanic.
-        this.jumpStrength = 60000;
+        this.numJumps = 2;
     }
 
     update(){
 
-    }
-
-    resetJumpStrength() {
-        this.jumpStrength = 60000;
     }
 
     // // jump(){
