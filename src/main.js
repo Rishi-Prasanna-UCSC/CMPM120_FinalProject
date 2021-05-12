@@ -3,8 +3,9 @@ let config = {
     width: 780,
     height: 440,
     // scene: [Intro],
-    scene: [Intro, Menu, Play, Pause, GameOver, Instructions], // Real version of game
+    // scene: [Intro, Menu, Play, Pause, GameOver, Instructions], // Real version of game
     // scene: [Play], // Debug
+    scene: [Instructions], // Debug
     physics: {
         default: 'arcade',
         arcade: {
