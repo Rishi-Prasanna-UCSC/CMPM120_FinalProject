@@ -20,8 +20,6 @@ class Ant extends Phaser.Physics.Arcade.Sprite {
 
         // Used for jump mechanic.
         this.numJumps = 2;
-
-
     }
 
     update(){

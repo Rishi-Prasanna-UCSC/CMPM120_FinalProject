@@ -132,9 +132,10 @@ class Play extends Phaser.Scene {
         //     "player"); //adjust to sprite name
     }
 
-    update(){
+    update() {
         this.antP1.update();
         this.currentScore.text = score;
+        // console.log(this.antP1.numJumps);
 
         if (distance % 300 == 0) {
             let fruit = this.physics.add.sprite(distance + 700,this.antP1.y - 150,'Fruit');
@@ -200,15 +201,27 @@ class Play extends Phaser.Scene {
         if (!this.antP1.spidered) {
             this.GPBG.tilePositionX += 1;
             score += 10;
+            /*
             if ((Phaser.Input.Keyboard.JustDown(keySPACE)) 
             && (this.antP1.body.touching.down)) {
-                this.antP1.jump = true;
-                this.antP1.setVelocityY(-700);
-                this.antP1.anims.play('AntJumping');
+                this.jump();
+            }
+
+            else if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+                if (this.antP1.numJumps > 0) {
+                    this.jump();
+                }
+            }
+            */
+            if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+                if (this.antP1.numJumps > 0) {
+                    this.jump();
+                }
             }
 
             // If you are only touching the platform.
             else if (this.antP1.body.touching.down) {
+                this.antP1.numJumps = 2;
                 this.antP1.anims.play('AntRunning', true);
                 this.jumpTimer = 30;
             }
@@ -220,6 +233,13 @@ class Play extends Phaser.Scene {
                 }
             }
         }
+    }
+
+    jump() {
+        this.antP1.jump = true;
+        this.antP1.setVelocityY(-700);
+        this.antP1.anims.play('AntJumping');
+        this.antP1.numJumps--;
     }
 
     touchedEnemy(ant, enemy) {
@@ -394,7 +414,7 @@ class Play extends Phaser.Scene {
         this.enemiesGroup = this.physics.add.group();
 
         this.antP1 = new Ant(this, 100, 340, 'Ant');
-        this.antP1.setGravityY(1000);
+        this.antP1.setGravityY(1500);
         this.antP1.setScale(0.35,0.35);
         this.physics.add.collider(this.antP1, this.platformGroup);
 
@@ -444,8 +464,8 @@ class Play extends Phaser.Scene {
                 + platform.width); 
 
             // The line that changes the distance between platforms.
-            if (distance < 1000) {
-                this.lastPlatDist += platform.width;
+            if (distance < 3000) {
+                this.lastPlatDist += platform.width - 10;
             }
             else {
                 this.lastPlatDist += rand;
@@ -485,7 +505,7 @@ class Play extends Phaser.Scene {
             if ((Phaser.Input.Keyboard.JustDown(keySPACE)) 
             && (this.antP1.body.touching.down)) {
                 this.antP1.jump = true;
-                this.antP1.setVelocityY(-550);
+                this.antP1.setVelocityY(-700);
                 this.antP1.anims.play('AntJumping');
             }
 
