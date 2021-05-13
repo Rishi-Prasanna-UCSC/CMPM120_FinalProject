@@ -63,6 +63,21 @@ class Play extends Phaser.Scene {
             },
             // fixedWidth: 100
         }
+
+        this.fruitAddScore = {
+            fontFamily: 'Courier New',
+            fontSize: '20px',
+            backgroundColor: '#ff0000',
+            color: '#ffff00',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+                left: 5,
+                right: 5
+            },
+            // fixedWidth: 100
+        }
         
         this.currentScore = this.add.text(50,
             50, score, this.scoreConfig);
@@ -117,7 +132,8 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.antP1, this.platformGroup);
 
         
-        // this.physics.add.collider(this.antP1, this.enemiesGroup, null, this.touchedEnemy, this);
+        
+        this.physics.add.collider(this.antP1, this.fruitGroup, null, this.touchedFruit, this);
         this.physics.add.collider(this.antP1, this.enemiesGroup, null, this.touchedEnemy, this);
 
 
@@ -139,7 +155,6 @@ class Play extends Phaser.Scene {
 
         if (distance % 300 == 0) {
             let fruit = this.physics.add.sprite(distance + 700,this.antP1.y - 150,'Fruit');
-            //fruit.setScale(0.01,0.01);
             fruit.setScale(0.25, 0.25);
             this.fruitGroup.add(fruit);
             fruit.setVelocityX(this.runSpeed);
@@ -240,6 +255,18 @@ class Play extends Phaser.Scene {
         this.antP1.setVelocityY(-700);
         this.antP1.anims.play('AntJumping');
         this.antP1.numJumps--;
+    }
+
+    touchedFruit(ant, fruit) {
+        let fruitValue = this.add.text(fruit.x,
+            fruit.y, "+1000", this.fruitAddScore);
+        
+        score += 1000;
+        this.time.delayedCall(500, () => {
+            fruitValue.visible = false;
+        }, null, this);
+        fruit.destroy();
+
     }
 
     touchedEnemy(ant, enemy) {

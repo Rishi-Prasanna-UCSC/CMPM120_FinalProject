@@ -2,10 +2,8 @@ let config = {
     type: Phaser.CANVAS,
     width: 780,
     height: 440,
-    // scene: [Intro],
-    // scene: [Intro, Menu, Play, Pause, GameOver, Instructions], // Real version of game
-    // scene: [Play], // Debug
-    scene: [Instructions], // Debug
+    scene: [Intro, Menu, Instructions, Play, Pause, GameOver], // Real version of game
+    // scene: [Instructions], // Debug
     physics: {
         default: 'arcade',
         arcade: {
