@@ -133,7 +133,7 @@ class Play extends Phaser.Scene {
 
         
         
-        this.physics.add.collider(this.antP1, this.fruitGroup, null, this.touchedFruit, this);
+        this.physics.add.overlap(this.antP1, this.fruitGroup, null, this.touchedFruit, this);
         this.physics.add.collider(this.antP1, this.enemiesGroup, null, this.touchedEnemy, this);
 
 
@@ -150,6 +150,7 @@ class Play extends Phaser.Scene {
 
     update() {
         this.antP1.update();
+        console.log(this.antP1.body.x);
         this.currentScore.text = score;
         // console.log(this.antP1.numJumps);
 
@@ -158,15 +159,17 @@ class Play extends Phaser.Scene {
             fruit.setScale(0.25, 0.25);
             this.fruitGroup.add(fruit);
             fruit.setVelocityX(this.runSpeed);
+            fruit.body.immovable = false;
+            fruit.body.allowGravity = false;
         }
 
+        
         if (distance % 500 == 0) {
             let enemy = this.physics.add.sprite(distance + 700,this.antP1.y + 10,'Spider');
             enemy.setScale(0.45,0.45);
             this.enemiesGroup.add(enemy);
             enemy.setVelocityX(this.runSpeed);
         }
-        
         
         if (distance + 780 > this.lastPlatDist) {
             // Add platform.
@@ -184,7 +187,6 @@ class Play extends Phaser.Scene {
             else {
                 this.lastPlatDist += rand;
             }
-
 
             this.platformGroup.add(platform);
 
