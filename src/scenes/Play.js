@@ -150,7 +150,6 @@ class Play extends Phaser.Scene {
 
     update() {
         this.antP1.update();
-        console.log(this.antP1.body.x);
         this.currentScore.text = score;
         // console.log(this.antP1.numJumps);
 
