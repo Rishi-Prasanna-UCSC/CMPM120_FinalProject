@@ -8,7 +8,7 @@ let config = {
         default: 'arcade',
         arcade: {
             debug: true
-        }
+        } 
     }
 }
 
