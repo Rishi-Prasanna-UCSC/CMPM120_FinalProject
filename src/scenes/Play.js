@@ -153,8 +153,13 @@ class Play extends Phaser.Scene {
         this.currentScore.text = score;
         // console.log(this.antP1.numJumps);
 
+        let randFruitY = Math.floor(
+            Math.random() * 
+            (this.antP1.y-(this.antP1.y-300))
+            + (this.antP1.y-300));
+
         if (distance % 300 == 0) {
-            let fruit = this.physics.add.sprite(distance + 700,this.antP1.y - 150,'Fruit');
+            let fruit = this.physics.add.sprite(distance + 700,randFruitY,'Fruit');
             fruit.setScale(0.25, 0.25);
             this.fruitGroup.add(fruit);
             fruit.setVelocityX(this.runSpeed);
@@ -177,7 +182,7 @@ class Play extends Phaser.Scene {
             let rand = Math.floor(
                 Math.random() * 
                 (platform.width*2 - platform.width)
-                + platform.width); 
+                + platform.width);
 
             // The line that changes the distance between platforms.
             if (distance < 3000) {
@@ -217,18 +222,6 @@ class Play extends Phaser.Scene {
         if (!this.antP1.spidered) {
             this.GPBG.tilePositionX += 1;
             score += 10;
-            /*
-            if ((Phaser.Input.Keyboard.JustDown(keySPACE)) 
-            && (this.antP1.body.touching.down)) {
-                this.jump();
-            }
-
-            else if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
-                if (this.antP1.numJumps > 0) {
-                    this.jump();
-                }
-            }
-            */
             if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
                 if (this.antP1.numJumps > 0) {
                     this.jump();
