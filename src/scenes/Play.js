@@ -172,7 +172,12 @@ class Play extends Phaser.Scene {
             let enemy = this.physics.add.sprite(distance + 700,this.antP1.y + 10,'Spider');
             enemy.setScale(0.45,0.45);
             this.enemiesGroup.add(enemy);
-            enemy.setVelocityX(this.runSpeed);
+            //enemy.setVelocityX(this.runSpeed + 30);
+            enemy.setVelocityX(
+                Math.floor(
+                Math.random() * 
+                ((this.runSpeed + 50) - (this.runSpeed - 70))
+                + (this.runSpeed - 70)));
         }
         
         if (distance + 780 > this.lastPlatDist) {
