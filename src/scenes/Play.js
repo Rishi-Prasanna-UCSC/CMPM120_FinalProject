@@ -253,9 +253,9 @@ class Play extends Phaser.Scene {
 
     touchedFruit(ant, fruit) {
         let fruitValue = this.add.text(fruit.x,
-            fruit.y, "+1000", this.fruitAddScore);
+            fruit.y, "+2000", this.fruitAddScore);
         
-        score += 1000;
+        score += 2000;
         this.time.delayedCall(500, () => {
             fruitValue.visible = false;
         }, null, this);
