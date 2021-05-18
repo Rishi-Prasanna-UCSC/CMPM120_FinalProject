@@ -8,7 +8,7 @@ let config = {
         default: 'arcade',
         arcade: {
             debug: false
-        } 
+        }
     }
 }
 
@@ -22,3 +22,4 @@ var score = 0;
 var highScore = 0;
 var distance = 0;
 var beatHighScore = false;
+var loadedMusic = false;
