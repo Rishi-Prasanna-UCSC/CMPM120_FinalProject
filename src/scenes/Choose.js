@@ -11,7 +11,7 @@ class Choose extends Phaser.Scene {
     create() {
 
 
-        this.antP1 = new Ant(this, 200, 220, 'Ant');
+        this.antP1 = new Ant(this, 235, 220, 'Ant');
         this.antP1.setScale(0.5);
 
         this.anims.create({
@@ -48,10 +48,10 @@ class Choose extends Phaser.Scene {
         //     },
         // }
 
-        this.ant = this.add.text(150, 300, "Ant Mode", this.antText);
+        this.ant = this.add.text(185, 300, "Ant Mode", this.antText);
         this.ant.setInteractive();
 
-        this.fly = this.add.text(450, 300, "Fly Mode", this.antText);
+        this.fly = this.add.text(490, 300, "Fly Mode", this.antText);
         this.fly.setInteractive();
 
         this.ant.on("pointerdown", () => {
