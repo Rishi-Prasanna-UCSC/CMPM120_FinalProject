@@ -24,7 +24,34 @@ class Choose extends Phaser.Scene {
         });
         this.antP1.anims.play('AntRunning', true);
 
-        this.ant = this.add.text(160, 300, "Ant Mode");
+        this.antText = {
+            fontFamily: 'Courier New',
+            fontSize: '20px',
+            backgroundColor: '#228B22',
+            padding: {
+                top: 5,
+                bottom: 5,
+                left: 5,
+                right: 5
+            },
+        }
+
+        // this.flyText = {
+        //     fontFamily: 'Courier New',
+        //     fontSize: '20px',
+        //     backgroundColor: '#228B22',
+        //     padding: {
+        //         top: 5,
+        //         bottom: 5,
+        //         left: 5,
+        //         right: 5
+        //     },
+        // }
+
+        this.ant = this.add.text(150, 300, "Ant Mode", this.antText);
+        this.ant.setInteractive();
+
+        this.ant = this.add.text(150, 300, "Ant Mode", this.antText);
         this.ant.setInteractive();
 
         ant.on("pointerdown", () => {
