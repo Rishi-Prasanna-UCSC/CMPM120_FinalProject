@@ -21,9 +21,6 @@ class Menu extends Phaser.Scene {
             loadedMusic = true;
         }
 
-        
-        //this.scene.start("playScene"); 
-
         let play = this.add.image(640, 85, 'PlayButton');
         let characters = this.add.image(640, 215, 'CharacterButton');
         let credits = this.add.image(640, 345, 'CreditsButton');
@@ -42,6 +39,9 @@ class Menu extends Phaser.Scene {
         instructLink.on('pointerdown', () => {
             this.scene.start("instructScene");
         });
+        characters.no('pointerdown', () => {
+            this.scene.start("chooseScene");
+        })
 
     }
     update() {
