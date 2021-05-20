@@ -39,7 +39,7 @@ class Menu extends Phaser.Scene {
         instructLink.on('pointerdown', () => {
             this.scene.start("instructScene");
         });
-        characters.no('pointerdown', () => {
+        characters.on('pointerdown', () => {
             this.scene.start("chooseScene");
         })
 

@@ -51,10 +51,14 @@ class Choose extends Phaser.Scene {
         this.ant = this.add.text(150, 300, "Ant Mode", this.antText);
         this.ant.setInteractive();
 
-        this.ant = this.add.text(150, 300, "Ant Mode", this.antText);
-        this.ant.setInteractive();
+        this.fly = this.add.text(450, 300, "Fly Mode", this.antText);
+        this.fly.setInteractive();
 
-        ant.on("pointerdown", () => {
+        this.ant.on("pointerdown", () => {
+            this.scene.start("menuScene");
+        });
+
+        this.fly.on("pointerdown", () => {
             this.scene.start("menuScene");
         });
     }
