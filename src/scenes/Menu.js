@@ -29,7 +29,6 @@ class Menu extends Phaser.Scene {
 
         // Set images to be interactive buttons.
         play.setInteractive();
-        characters.setInteractive();
         credits.setInteractive();
         instructLink.setInteractive();
 
@@ -39,9 +38,6 @@ class Menu extends Phaser.Scene {
         instructLink.on('pointerdown', () => {
             this.scene.start("instructScene");
         });
-        characters.on('pointerdown', () => {
-            this.scene.start("chooseScene");
-        })
 
     }
     update() {
